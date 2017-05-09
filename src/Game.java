@@ -32,7 +32,7 @@ public class Game {
 			player1.playHand();
 			
 			// Record round winner
-			this.winners[iRound] = Game.getHandWinner(player1,player2);
+			this.winners[iRound] = Game.setHandWinner(player1,player2);
 			
 			// Increment number of wins
 			if (!this.winners[iRound].equals(nullPlayer)) {
@@ -59,15 +59,21 @@ public class Game {
 	}
 	
 	// Get hand winner
-	public static Player getHandWinner(Player player1, Player player2){
+	public static Player setHandWinner(Player player1, Player player2){
 
 		if (player1.getHand().beats(player2.getHand())){
+			player1.setFormerResult(RoundResult.WIN);
+			player2.setFormerResult(RoundResult.LOSS);
 			return player1;
 		}
 		else if (player2.getHand().beats(player1.getHand())){
+			player1.setFormerResult(RoundResult.LOSS);
+			player2.setFormerResult(RoundResult.WIN);
 			return player2;
 		}
 		else {
+			player1.setFormerResult(RoundResult.TIE);
+			player2.setFormerResult(RoundResult.TIE);
 			return nullPlayer;
 		}
 	}
@@ -89,4 +95,10 @@ public class Game {
 		System.out.println(player2.getName() + ": " + nWinsPlayer2);
 	}
 
+}
+
+enum RoundResult {
+	WIN,
+	LOSS,
+	TIE;
 }

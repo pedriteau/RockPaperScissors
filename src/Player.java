@@ -5,6 +5,8 @@ class Player {
 	
 	private String name = "";
 	private Hand hand;
+	private RoundResult formerResult;
+	private Hand formerHand;
 	
 	// Constructor
 	public Player(String name){
@@ -16,6 +18,15 @@ class Player {
 		this.name = name;
 	}
 	
+	public void setFormerResult(RoundResult result){
+		this.formerResult = result;
+		this.formerHand = this.hand;
+	}
+	
+	public void setHand(Hand hand){
+		this.hand = hand;
+	}
+	
 	// Getters
 	public Hand getHand(){
 		return this.hand;
@@ -23,6 +34,14 @@ class Player {
 	
 	public String getName(){
 		return this.name;
+	}
+	
+	public RoundResult getFormerResult(){
+		return this.formerResult;
+	}
+	
+	public Hand getFormerHand(){
+		return this.formerHand;
 	}
 	
 	// Play hand
@@ -50,13 +69,13 @@ class Player {
 	protected int setHandFromId(int handId){
 		switch (handId) {
 		case 1: 
-			this.hand = Hand.ROCK;
+			this.setHand(Hand.ROCK);
 			return 0;
 		case 2: 
-			this.hand = Hand.PAPER;
+			this.setHand(Hand.PAPER);
 			return 0;
 		case 3: 
-			this.hand = Hand.SCISSORS;
+			this.setHand(Hand.SCISSORS);
 			return 0;
 		default:
 			return -1;
@@ -68,24 +87,71 @@ class Player {
 class ComputerPlayer extends Player{
 	
 	private Random rand;
+	private boolean playSmart = false;
 	
 	// Constructors
 	public ComputerPlayer(){
 		super("Computer");
-		rand = new Random();
+		initialize(false);
+	}
+	
+	public ComputerPlayer(boolean playSmart){
+		super("Computer");
+		initialize(playSmart);
 	}
 	
 	public ComputerPlayer(String name){
 		super(name);
+		initialize(false);
+	}
+	
+	public ComputerPlayer(String name, boolean playSmart){
+		super(name);
+		initialize(playSmart);
+	}
+	
+	// Initialize
+	private void initialize(boolean playSmart){
+		this.playSmart = playSmart;
 		rand = new Random();
 	}
 	
 	// Play hand
 	public void playHand(){
-		int handId = rand.nextInt(3) + 1;
-		int handError = setHandFromId(handId);
-		if (handError != 0){
-			System.out.println("This should be an exception!");
+		
+		// Play random hand
+		if (!this.playSmart) {
+			int handId = rand.nextInt(3) + 1;
+			int handError = setHandFromId(handId);
+		}
+		// Play smart hand
+		else {
+			if (this.getFormerResult().equals(RoundResult.WIN)) {
+				if (this.getFormerHand().equals(Hand.ROCK)){
+					this.setHand(Hand.SCISSORS);
+				}
+				else if (this.getFormerHand().equals(Hand.PAPER)){
+					this.setHand(Hand.ROCK);
+				}
+				else if (this.getFormerHand().equals(Hand.SCISSORS)){
+					this.setHand(Hand.PAPER);
+				}
+			}
+			else if (this.getFormerResult().equals(RoundResult.LOSS)) {
+				if (this.getFormerHand().equals(Hand.ROCK)){
+					this.setHand(Hand.SCISSORS);
+				}
+				else if (this.getFormerHand().equals(Hand.PAPER)){
+					this.setHand(Hand.ROCK);
+				}
+				else if (this.getFormerHand().equals(Hand.SCISSORS)){
+					this.setHand(Hand.PAPER);
+				}
+			}
+			else {
+				int handId = rand.nextInt(3) + 1;
+				int handError = setHandFromId(handId);
+			}
 		}
 	}
 }
