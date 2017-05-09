@@ -6,18 +6,31 @@ class Player {
 	private String name = "";
 	private Hand hand;
 	
+	// Constructor
 	public Player(String name){
 		this.setName(name);
 	}
 	
+	// Setters
 	public void setName(String name){
 		this.name = name;
 	}
 	
+	// Getters
+	public Hand getHand(){
+		return this.hand;
+	}
+	
+	public String getName(){
+		return this.name;
+	}
+	
+	// Play hand
 	public void playHand(){
 		boolean restart = true;
 		Scanner sc = new Scanner(System.in);
 		
+		// User selection
 		while (restart == true){
 			System.out.println("Select hand to play:");
 			System.out.println("1 - Rock");
@@ -33,7 +46,7 @@ class Player {
 		}
 	}
 
-	
+	// Set hand from ID
 	protected int setHandFromId(int handId){
 		switch (handId) {
 		case 1: 
@@ -50,20 +63,13 @@ class Player {
 		}
 	}
 	
-	public Hand getHand(){
-		return this.hand;
-	}
-	
-	public String getName(){
-		return this.name;
-	}
-	
 }
 
 class ComputerPlayer extends Player{
 	
 	private Random rand;
 	
+	// Constructors
 	public ComputerPlayer(){
 		super("Computer");
 		rand = new Random();
@@ -74,6 +80,7 @@ class ComputerPlayer extends Player{
 		rand = new Random();
 	}
 	
+	// Play hand
 	public void playHand(){
 		int handId = rand.nextInt(3) + 1;
 		int handError = setHandFromId(handId);

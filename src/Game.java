@@ -8,20 +8,33 @@ public class Game {
 	private int nWinsPlayer1 = 0;
 	private int nWinsPlayer2 = 0;
 	
+	// Constructor
 	public Game(Player player1, Player player2) {
 		this.player1 = player1;
 		this.player2 = player2;
 	}
 	
+	// Play game
 	public void play(int nRounds){
+		
+		// Define winners and losers arrays
 		this.winners = new Player[nRounds];
 		this.losers = new Player[nRounds];
+		
+		// Initialize number of wins
 		nWinsPlayer1 = 0;
 		nWinsPlayer2 = 0;
+		
+		// Loop over rounds
 		for (int iRound = 0; iRound < nRounds; iRound++){
+			// Play hands for both players
 			player2.playHand();
 			player1.playHand();
+			
+			// Record round winner
 			this.winners[iRound] = Game.getHandWinner(player1,player2);
+			
+			// Increment number of wins
 			if (!this.winners[iRound].equals(nullPlayer)) {
 				if (this.winners[iRound].equals(player1)){
 					this.losers[iRound] = player2;
@@ -39,10 +52,13 @@ public class Game {
 			else {
 				this.losers[iRound] = nullPlayer;
 			}
+			
+			// Print results of last hand
 			printLastHand(iRound);
 		}
 	}
 	
+	// Get hand winner
 	public static Player getHandWinner(Player player1, Player player2){
 
 		if (player1.getHand().beats(player2.getHand())){
@@ -56,6 +72,7 @@ public class Game {
 		}
 	}
 	
+	// Print last hand
 	void printLastHand(int iRound){
 		if (!this.winners[iRound].equals(nullPlayer)) {
 			System.out.println(this.winners[iRound].getName() + " won the hand! (" + this.winners[iRound].getHand() + " vs " + this.losers[iRound].getHand() + ")");
@@ -65,7 +82,8 @@ public class Game {
 		}
 	}
 	
-	void printScore(int nRound){
+	// Print score up until now
+	void printScore(){
 		System.out.println("Cumulative score in this game:");
 		System.out.println(player1.getName() + ": " + nWinsPlayer1);
 		System.out.println(player2.getName() + ": " + nWinsPlayer2);
