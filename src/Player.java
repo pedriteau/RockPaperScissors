@@ -37,13 +37,13 @@ class Player {
 	protected int setHandFromId(int handId){
 		switch (handId) {
 		case 1: 
-			this.hand = new Hand(Hand.HandType.ROCK);
+			this.hand = Hand.ROCK;
 			return 0;
 		case 2: 
-			this.hand = new Hand(Hand.HandType.PAPER);
+			this.hand = Hand.PAPER;
 			return 0;
 		case 3: 
-			this.hand = new Hand(Hand.HandType.SCISSORS);
+			this.hand = Hand.SCISSORS;
 			return 0;
 		default:
 			return -1;
@@ -70,14 +70,10 @@ class ComputerPlayer extends Player{
 	}
 	
 	public void playHand(){
-		int handId = rand.nextInt(3);
-		System.out.println("Computer plays " + handId);
+		int handId = rand.nextInt(3) + 1;
 		int handError = setHandFromId(handId);
 		if (handError != 0){
 			System.out.println("This should be an exception!");
 		}
 	}
-	
-	
-	
 }

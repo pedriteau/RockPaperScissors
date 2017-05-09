@@ -40,7 +40,6 @@ public class Game {
 				this.losers[iRound] = nullPlayer;
 			}
 			printLastHand(iRound);
-			printScore(iRound);
 		}
 	}
 	

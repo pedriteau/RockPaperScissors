@@ -1,6 +1,8 @@
 import java.util.Scanner;
 
 public class RockPaperScissors {
+	
+	public static int nGames = 10;
 
 	public static void main(String[] args) {
 		
@@ -14,7 +16,8 @@ public class RockPaperScissors {
 		Player player2 = new ComputerPlayer();
 		
 		Game game = new Game(player1,player2);
-		game.play(5);
+		game.play(nGames);
+		game.printScore(nGames-1);
 		
 		System.out.println("End of game!");
 		

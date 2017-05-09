@@ -1,54 +1,34 @@
-public class Hand {
-	public static enum HandType {
-		ROCK("rock"),
-		PAPER("paper"),
-		SCISSORS("scissors");
-		
-		private final String text;
-		
-		HandType(String text){
-			this.text = text;
-		}
-		
-		public String toString(){
-			return text;
-		}
+public enum Hand {
+	ROCK("rock","scissors"),
+	PAPER("paper","rock"),
+	SCISSORS("scissors","paper");
+	
+	private final String value;
+	private final String beatsHand;
+	
+	Hand(String value, String beatsHand){
+		this.value = value;
+		this.beatsHand = beatsHand;
 	}
 	
-	private HandType value;
-	private HandType beatsHand;
-	
-	public Hand(HandType handType){
-		value = handType;
-		switch (value){
-		case ROCK:
-			beatsHand = HandType.SCISSORS;
-			break;
-		case PAPER:
-			beatsHand = HandType.ROCK;
-			break;
-		case SCISSORS:
-			beatsHand = HandType.PAPER;
-			break;
-		}
+	public String toString(){
+		return value;
 	}
 	
-	public boolean beats(Hand otherHand){
-		// System.out.println(this.beatsHand);
-		// System.out.println(otherHand.getValue());
-		if (otherHand.getValue().equals(this.beatsHand)){
+	public String getValue(){
+		return value;
+	}
+	
+	public String getBeats(){
+		return beatsHand;
+	}
+	
+	public boolean beats(Hand hand){
+		if (hand.getValue().equals(this.beatsHand)) {
 			return true;
 		}
 		else {
 			return false;
 		}
-	}
-	
-	public HandType getValue(){
-		return this.value;
-	}
-	
-	public String toString(){
-		return this.value.toString();
 	}
 }
