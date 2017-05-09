@@ -69,6 +69,11 @@ class ComputerPlayer extends Player{
 		rand = new Random();
 	}
 	
+	public ComputerPlayer(String name){
+		super(name);
+		rand = new Random();
+	}
+	
 	public void playHand(){
 		int handId = rand.nextInt(3) + 1;
 		int handError = setHandFromId(handId);
