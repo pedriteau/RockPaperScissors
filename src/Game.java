@@ -61,7 +61,7 @@ public class Game {
 	// Get hand winner
 	public static Player setHandWinner(Player player1, Player player2){
 
-		if (player1.getHand().beats(player2.getHand())){
+		if (player1.getHand().beats(player2.getHand())) {
 			player1.setFormerResult(RoundResult.WIN);
 			player2.setFormerResult(RoundResult.LOSS);
 			return player1;
@@ -100,5 +100,6 @@ public class Game {
 enum RoundResult {
 	WIN,
 	LOSS,
-	TIE;
+	TIE,
+	NULL;
 }

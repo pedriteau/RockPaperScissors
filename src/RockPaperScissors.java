@@ -15,7 +15,8 @@ public class RockPaperScissors {
 		
 		// Create players
 		Player player1 = new Player(playerName);
-		Player player2 = new ComputerPlayer("Computer");
+		Player player2 = new ComputerPlayer("ComputerSmart",true);
+		Player player3 = new ComputerPlayer("Computer");
 		
 		// Create game
 		Game game = new Game(player1,player2);

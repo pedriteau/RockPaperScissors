@@ -5,8 +5,8 @@ class Player {
 	
 	private String name = "";
 	private Hand hand;
-	private RoundResult formerResult;
-	private Hand formerHand;
+	private RoundResult formerResult = RoundResult.NULL;
+	private Hand formerHand = Hand.ROCK;
 	
 	// Constructor
 	public Player(String name){
@@ -88,6 +88,7 @@ class ComputerPlayer extends Player{
 	
 	private Random rand;
 	private boolean playSmart = false;
+	private double smartThreshold = 0.75;
 	
 	// Constructors
 	public ComputerPlayer(){
@@ -126,26 +127,35 @@ class ComputerPlayer extends Player{
 		}
 		// Play smart hand
 		else {
-			if (this.getFormerResult().equals(RoundResult.WIN)) {
-				if (this.getFormerHand().equals(Hand.ROCK)){
-					this.setHand(Hand.SCISSORS);
+			
+			// Play smart only X% of time to preserve some randomness
+			double smartNumber = rand.nextDouble(); // Random number between 0.0 and 1.0
+			if (smartNumber < smartThreshold) {
+				if (this.getFormerResult().equals(RoundResult.WIN)) {
+					if (this.getFormerHand().equals(Hand.ROCK)){
+						this.setHand(Hand.SCISSORS);
+					}
+					else if (this.getFormerHand().equals(Hand.PAPER)){
+						this.setHand(Hand.ROCK);
+					}
+					else if (this.getFormerHand().equals(Hand.SCISSORS)){
+						this.setHand(Hand.PAPER);
+					}
 				}
-				else if (this.getFormerHand().equals(Hand.PAPER)){
-					this.setHand(Hand.ROCK);
+				else if (this.getFormerResult().equals(RoundResult.LOSS)) {
+					if (this.getFormerHand().equals(Hand.ROCK)){
+						this.setHand(Hand.SCISSORS);
+					}
+					else if (this.getFormerHand().equals(Hand.PAPER)){
+						this.setHand(Hand.ROCK);
+					}
+					else if (this.getFormerHand().equals(Hand.SCISSORS)){
+						this.setHand(Hand.PAPER);
+					}
 				}
-				else if (this.getFormerHand().equals(Hand.SCISSORS)){
-					this.setHand(Hand.PAPER);
-				}
-			}
-			else if (this.getFormerResult().equals(RoundResult.LOSS)) {
-				if (this.getFormerHand().equals(Hand.ROCK)){
-					this.setHand(Hand.SCISSORS);
-				}
-				else if (this.getFormerHand().equals(Hand.PAPER)){
-					this.setHand(Hand.ROCK);
-				}
-				else if (this.getFormerHand().equals(Hand.SCISSORS)){
-					this.setHand(Hand.PAPER);
+				else {
+					int handId = rand.nextInt(3) + 1;
+					int handError = setHandFromId(handId);
 				}
 			}
 			else {
